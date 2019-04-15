@@ -7,11 +7,15 @@
 
 #### There also must be a folder called mit_data (attached in zip file) where all data is stored
 
-The proposed idea for this project is inspired by the Apple Watch Series 4 and modern-day ECG machines. ECG’s or electrocardiograms are heart monitoring devices that measure the hearts’ normal sinus rhythm. Biologically speaking, cardiac muscles generate a wave pattern through depolarization and repolarization of each beat. ECG measurements are recorded by the placement of up to 12 electrodes on the body that can measure the overall magnitude of the hearts electric potential. A single heart beat voltage signal can be examined with a P wave which represents the depolarization of the atria; the QRS complex which illustrates ventricle depolarization of the atria, and finally the T wave, which indicates ventricle repolarization. The image below shows a common signal repeat unit of this waveform. 
+---
+
+Electrocardiograms or ECG are signals that assess an individual’s cardiac rhythm as signal. This is a result of the depolarization and repolarization of the hearts’ chambers that can be interpreted voltage over time. The premise of this paper is the application of supervised deep learning to identify illustrations of labeled rhythmic aberrations. The proposed technique uses a series of single dimensional convolutions paired with a multilayered perceptron to classify five common arrhythmias. The model was trained with 75% of the data which was sampled with equal class counts per batch but tested on the data’s natural distribution. After implementation, the accuracy of the model proved to be 97.5 + .0044 % over five iterations with per class metrics higher than 85% across all classes. Future improvements include different processing techniques as well as slight adjustment to model architecture. 
 ​
 <p align="center"> 
 <img src="heartbeat.png">
 </p>
+
+---
  
 The primary objective of this project is to use a 1D Convolutional Network paired with a Multilayer perceptron that finds unhealthy signal in a continous heart beat. All code is public and can be manipulated for use. 
 ​
