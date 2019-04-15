@@ -2,17 +2,28 @@
 ### Application of deep learning and convolutional networks for ECG classification
 
 
-#### Make sure heartbeat.py and normalizer.py are in the same directory
-###### `heartbeat.py`  is a small written signal processing library and `normalizer.py` has several other util functions
+#### Instructions for set Up:
+ 1. Make sure heartbeat.py and normalizer.py are in the same directory 
+ 	`heartbeat.py`  is a small written signal processing library and `normalizer.py` has several other util functions
 
-#### There also must be a folder called mit_data (attached in zip file) where all data is stored
+ 2. Folder mit_data (attached in data file) where all data is stored
+ 	You need this for
 
 ---
+#### What's in this Repo:
+- mit_data: data used in training as .txt & .csv 
+- `heartbeat.py`  is a small written signal processing library and `normalizer.py` has several other util functions
+- `torch_tools.py`: all torch functions used (py file just holds the code and is not needed per say)
+- `ECG_notebook.ipynb`: Notebook with how to create classifier in Pytorch (requires `heartbeat.py` and `normalizer.py`)
+- PPT and PDF of Associated Paper included 
 
-Electrocardiograms or ECG are signals that assess an individual’s cardiac rhythm as signal. This is a result of the depolarization and repolarization of the hearts’ chambers that can be interpreted voltage over time. The premise of this paper is the application of supervised deep learning to identify illustrations of labeled rhythmic aberrations. The proposed technique uses a series of single dimensional convolutions paired with a multilayered perceptron to classify five common arrhythmias. The model was trained with 75% of the data which was sampled with equal class counts per batch but tested on the data’s natural distribution. After implementation, the accuracy of the model proved to be 97.5 + .0044 % over five iterations with per class metrics higher than 85% across all classes. Future improvements include different processing techniques as well as slight adjustment to model architecture. 
+
+---
+#### Description:
+Electrocardiograms or ECG are signals that assess an individual’s cardiac rhythm as signal. This is a result of the depolarization and repolarization of the hearts’ chambers that can be interpreted voltage over time. The premise of this paper is the application of supervised deep learning to identify illustrations of labeled rhythmic aberrations. The proposed technique uses a series of single dimensional convolutions paired with a multilayered perceptron to classify five common arrhythmias. The model was trained with 75% of the data which was sampled with equal class counts per batch but tested on the data’s natural distribution. After implementation, the accuracy of the model proved to be **97.5 + .0044%** over five iterations with per class metrics higher than **85%** across all classes. Future improvements include different processing techniques as well as slight adjustment to model architecture. 
 ​
 <p align="center"> 
-<img src="labelled_beat.png">
+<img src="images/labelled_beat.png">
 </p>
 
 ---
@@ -20,7 +31,7 @@ Electrocardiograms or ECG are signals that assess an individual’s cardiac rhyt
 The primary objective of this project is to use a 1D Convolutional Network paired with a Multilayer perceptron that finds unhealthy signal in a continous heart beat. All code is public and can be manipulated for use. 
 ​
 <p align="center"> 
-<img src="comparison_of_beats.png">
+<img src="images/comparison_of_beats.png">
 </p>
 
 ---
