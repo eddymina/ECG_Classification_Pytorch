@@ -31,7 +31,7 @@ def longest(list1):
     Returns index for length of longest list for a list of lists 
     """
         
-    return max(enumerate(isolated_beat), key = lambda tup: len(tup[1]))[0]
+    return max(enumerate(list1), key = lambda tup: len(tup[1]))[0]
     
 def moving_average(x,window):
     """
