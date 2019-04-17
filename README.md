@@ -26,7 +26,6 @@ The primary objective of this project is to use a 1D Convolutional Network paire
 
 #### Description:
 Electrocardiograms or ECG are signals that assess an individual’s cardiac rhythm as signal. This is a result of the depolarization and repolarization of the hearts’ chambers that can be interpreted voltage over time. The premise of this paper is the application of supervised deep learning to identify illustrations of labeled rhythmic aberrations. The proposed technique uses a series of single dimensional convolutions paired with a multilayered perceptron to classify five common arrhythmias. The model was trained with 75% of the data which was sampled with equal class counts per batch but tested on the data’s natural distribution. After implementation, the accuracy of the model proved to be **97.5 + .0044%** over five iterations with per class metrics higher than **85%** across all classes. Future improvements include different processing techniques as well as slight adjustment to model architecture. 
-​ 
 
 ---
 ​
