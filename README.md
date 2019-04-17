@@ -10,7 +10,7 @@ The primary objective of this project is to use a 1D Convolutional Network paire
 </p>
 
 #### Instructions for set Up:
- 1. Make sure heartbeat.py and normalizer.py are in the same directory. `heartbeat.py`  is a small written signal processing library and `normalizer.py` has several other util functions
+ 1. Make sure heartbeat.py and normalizer.py are in the same directory. `heartbeat.py`  is a small written signal processing library and `normalizer.py` has several other util functions and is based on (requires) heartbeat.py
 
  2. Folder mit_data (attached in data file) where all data is stored. This must also be in the same directory for heart beat to work.
 
