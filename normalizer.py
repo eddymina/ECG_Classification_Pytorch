@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np 
 from scipy import fftpack
 from scipy.signal import butter, lfilter, freqz
-
+import math
 
 def z_norm_01(result):
     """
@@ -48,9 +48,6 @@ def z_norm2(result):
     result -= result_mean
     result /= max(abs(result))
     return result
-
-import math
-
 
 def dynamic_threshold(signal, fs):
     mvg_avg_percent= np.arange(5,100,5).tolist() #[0 100]
@@ -116,7 +113,6 @@ def peak_finder(signal,mvg_perc, fs):
     
     return mov_avg, peaklist 
   
-
 class filt: 
 
     def fft_plot(self,sig,label,color):
@@ -179,8 +175,6 @@ class filt:
         plt.figure(figsize=(20,10))
         sig,notes=hb.get_patient_data(patient,norm=True)
 
-
-
         #FFT PLOT
         plt.subplot(221)
         self.fft_plot(sig,label='Orig Sig',color='b')
@@ -188,7 +182,6 @@ class filt:
         plt.title('FFT Patient: {}'.format(patient))
         plt.xlabel('Frequency [Hz]')
         plt.xlim(0,cutoff+30)
-
 
         #Low pass Filter Frequency Response 
         b, a = self.butter_lowpass(cutoff, fs, order=order)
@@ -212,21 +205,3 @@ class filt:
         plt.ylim(-.5,1.1)
         plt.grid()
         plt.legend()
-
-#################################################     
-if __name__ == '__main__':
-    sig,notes= hb.get_patient_data(219,norm=False)
-    n = np.random.choice(1000)
-    plt.plot(sig[0:n])
-
-
-    
-    sig2=z_norm_b(sig)
-    plt.figure()
-    plt.plot(sig2[0:100])
-    sig3=z_norm(sig)
-    plt.figure()
-    plt.plot(sig3[0:100])
-    plt.show()
-
-

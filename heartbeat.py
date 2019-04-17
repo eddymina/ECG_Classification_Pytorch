@@ -12,9 +12,6 @@ from os.path import isfile, join
 import sys
 import warnings 
 
-
-
-
 classes_further= {'N':'Normal beat','L':'Left bundle branch block beat','R':'Right bundle branch block beat',
 'A':'Atrial premature beat','a':'Aberrated atrial premature beat','J':'Nodal (junctional) premature beat',
 'S':'Supraventricular premature beat','V':'Premature ventricular contraction','F':'Fusion of ventricular and normal beat',
@@ -23,8 +20,7 @@ classes_further= {'N':'Normal beat','L':'Left bundle branch block beat','R':'Rig
 'f':'Fusion of paced and normal beat','x':'Non-conducted P-wave (blocked APB)','Q':'Unclassifiable beat',
 '|':'Isolated QRS-like artifact'}
 
-
-#https://arxiv.org/abs/1805.00794
+#https://arxiv.org/abs/1805.00794 (original paper)
 
 def longest(list1):
     """
@@ -103,8 +99,6 @@ def distribution_bar(patients,classes,classes_reducer=None):
     plt.subplot(212)
     for i in range(0,len(classes)):
         plt.bar(r[i], bars[i], width=barWidth, edgecolor='white', label=classes[i])
-
-
     n=r[0]
     plt.xticks([n + barWidth for n in range(r_len)],patients)
     plt.ylabel('Count', fontweight='bold')
@@ -160,8 +154,6 @@ def zero_pad(lst):
     """
     pad = len(max(lst, key=len))
     return np.array([i + [0]*(pad-len(i)) for i in lst])
-
-
 
 def get_HR(peaklist,fs):
     """
@@ -223,8 +215,6 @@ def get_patient_data(patient,norm=True, sample_plot=False):
     ecg_notes.columns=['sample_num','type','aux']
     if norm == True:
         ecg_data.signal= z_norm(ecg_data.signal)
-    
-    
     if sample_plot == True:
         peaklist= ecg_notes.sample_num.astype(int).values
         plt.figure()
@@ -237,7 +227,6 @@ def get_patient_data(patient,norm=True, sample_plot=False):
         
     return ecg_data.signal,ecg_notes
 
-
 def z_norm(result):
     """
     Normalize Data. This fits
@@ -246,14 +235,12 @@ def z_norm(result):
     result = (result-min(result))/(max(result)-min(result))
     return result
 
-
 def hr_sample_len(HR,fs=360):
     """
     Convert a HR to sample len
     
     """
     return int((fs*60)/HR)# 60 seconds * samples/sec 
-
 
 def isolate_patient_data(patients,classes,classes_further,classes_reducer=None, min_HR= 40,max_HR= 140,fs=360,verbose=False,plot_figs=True):
     """
@@ -280,15 +267,11 @@ def isolate_patient_data(patients,classes,classes_further,classes_reducer=None, 
     Output: 
         X,y np arrays 
         Isolated beat:: list of lists of each patient ecg data (unpadded)
-    
-
-    """
-    
+    """   
     isolated_beat= []
     start=time.time()
     print('Examining {} patients...'.format(len(patients)))
 
-    
     for i,patient in enumerate(patients):
         ecg_signal,ecg_notes= get_patient_data(patient)
         peaklist= ecg_notes.sample_num.astype(int).values 
@@ -348,7 +331,6 @@ def isolate_patient_data(patients,classes,classes_further,classes_reducer=None, 
     print('{:.2f}min Runtime'.format((time.time()-start)/60))
     return X,y,isolated_beat
 
-
 def show_sample_plots(X,y,classes,classes_further,num_sigs=5,fs=360,plot_xlim=1,dims=[2,4]):
     """
     Sample Plot Generator Function. Show user selected amount of 
@@ -364,8 +346,6 @@ def show_sample_plots(X,y,classes,classes_further,num_sigs=5,fs=360,plot_xlim=1,
     Output: 
         Sample signal plots per class
     """
-
-    
     time= np.arange(0, X.shape[1])/fs
     print("MAX HB TIME:",(X.shape[1])/fs)
     colors=['m','c','b','g','r']
@@ -398,7 +378,6 @@ def most_common_conditions(patients,top_k):
         
     return Counter(allp).most_common(top_k)
 
-
 def resample_vals(X,samp_len=187):
     """
     Signal resampling function 
@@ -409,14 +388,10 @@ def resample_vals(X,samp_len=187):
         X_resamp[i]=resample(x,samp_len)
     return X_resamp
 
-
-
-   
-#################################################     
+##################MAIN#########################     
 if __name__ == '__main__':
     classes= {0:'N',1:'L',2:'R',3:'V',4:'/',5:'A',6:'f',7:'F'}
     patients = all_patients()
     patients=[101]
-
     X,y,isolated_beat=isolate_patient_data(patients=patients, classes=classes,classes_further=classes_further,
                              fs=360,verbose=False,plot_figs=True)

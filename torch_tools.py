@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-from torch import optim 
 import random
 import torch.utils.data
 from torch.utils.data.sampler import SubsetRandomSampler
@@ -18,9 +17,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 import warnings
 from torch.utils.data.sampler import WeightedRandomSampler
-import random
-import torch.utils.data
-
 
 def get_key(val,my_dict): 
     """
@@ -102,7 +98,6 @@ def imbalanced_loader(X_train,y_train,X_test,y_test,valid_size=.05,batch_size=51
 
     print('\nTrain Len=',len(train_idx),', Validation Len=',len(valid_idx), 'Test Len=',len(y_test))
                                                                                         
-  
     class_sample_count = np.array([len(np.where(y_train[[train_idx]]==t)[0]) for t in np.unique(y_train[[train_idx]])])
     weight = 1. / class_sample_count
     samples_weight = np.array([weight[t] for t in y_train[[train_idx]]])
@@ -112,12 +107,10 @@ def imbalanced_loader(X_train,y_train,X_test,y_test,valid_size=.05,batch_size=51
     train_sampler= torch.utils.data.BatchSampler(sampler=train_sampler, batch_size=batch_size, drop_last=True)
     trainloader = torch.utils.data.DataLoader(dataset = trainDataset, batch_size=batch_size, num_workers=1, sampler= train_sampler)
   
-    
     valDataset = torch.utils.data.TensorDataset(torch.FloatTensor(X_train[[valid_idx]]), torch.LongTensor(y_train[[valid_idx]].astype(int)))
     sampler = torch.utils.data.RandomSampler(valDataset)
     sampler= torch.utils.data.BatchSampler(sampler, batch_size, drop_last=True)
     validloader = torch.utils.data.DataLoader(dataset = valDataset, batch_size=batch_size, num_workers=1,sampler=sampler)
-
 
     testset=[]
     for i,x in enumerate(X_test):
@@ -131,13 +124,8 @@ def imbalanced_loader(X_train,y_train,X_test,y_test,valid_size=.05,batch_size=51
     dataloader = {"train": trainloader, "val": validloader}
     print('Train Size Batched=',int(len(dataloader['train'].dataset)/batch_size),', Validation Size Batched=',int(len(dataloader['val'].dataset)/batch_size),', Test Size Batched=',len(testloader))
     
-    
     warnings.resetwarnings()
     return dataloader,testloader
-
-
-
-
 
 class Anomaly_Classifier(nn.Module):
     def __init__(self, input_size,num_classes):
@@ -245,7 +233,6 @@ def train_model(data_loader, model, criterion,optimizer, n_epochs=100,print_ever
       if validation == True: 
         evaluation=['train', 'val']
       else:
-        
         evaluation=['train']
         
       # Each epoch has a training and validation phase
@@ -260,12 +247,7 @@ def train_model(data_loader, model, criterion,optimizer, n_epochs=100,print_ever
           # Iterate over data.
           for hb,labels in data_loader[phase]:
             for hb_index,label in enumerate(labels):
-#                 print(hb[hb_index].size(),label.cpu().numpy().shape,Counter(label.cpu().numpy().flatten()))
-    
- 
                 HB, label = hb[hb_index].unsqueeze(1).cuda(), label.cuda()
-
-
                 # forward + backward + optimize
                 outputs = model(HB)
 
@@ -303,8 +285,6 @@ def train_model(data_loader, model, criterion,optimizer, n_epochs=100,print_ever
   
   return model 
 
-
-
 def evaluate(testloader, trained_model,verbose= True):
   """
   Evaluation Metric Platfrom. Feed in the trained model 
@@ -327,15 +307,12 @@ def evaluate(testloader, trained_model,verbose= True):
   preds_flat = [item for sublist in preds for item in sublist]
   truth_flat = [item for sublist in truth for item in sublist] 
  
-
   if verbose == True:
     print('\nEvaluating....')
     print("TEST ACC:",accuracy_score(truth_flat,preds_flat))
     print(classification_report(truth_flat,preds_flat))
   
   return preds_flat,truth_flat
-
-
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
@@ -370,16 +347,10 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     
-    
-    
-def get_kernel_size(n_h,k_h,n_w,k_w,p_h=0,s_h=1,p_w=0,s_w=1):
-    """
-    Kernel Measuring Function 
-    """
-    return [int((n_h-k_h+p_h+s_h)/s_h),int((n_w-k_w+p_w+s_w)/s_w)]    
-    
-    
 def variation(n_epochs,num_iters=5):
+  """ 
+  Examing model for n iterations 
+  """
   p=[]
   t=[]
   accuracy_scores=[]
@@ -401,8 +372,6 @@ def variation(n_epochs,num_iters=5):
     print(accuracy_score(truth,preds))
     accuracy_scores.append(accuracy_score(truth,preds))
   return p,t,accuracy_scores
-    
-    
     
 def get_kernel_size(n_h,k_h,n_w,k_w,p_h=0,s_h=1,p_w=0,s_w=1):
     """
