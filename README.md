@@ -1,4 +1,4 @@
-# ECG_Classification_Pytorch
+# ECG Classification Pytorch
 ### Application of deep learning and convolutional networks for ECG classification
 
 ---
